@@ -1,16 +1,17 @@
 pipeline {
-    // these are prebuild section
+
     agent {
         node {
-        label 'AGENT-1'
-       }
+            label 'AGENT-1'
+        }
     }
-    environment { 
+
+    environment {
         COURSE = 'Jenkins'
     }
-     options {
-        // Timeout counter starts AFTER agent is allocated
-        timeout(time: 10, unit: 'SECONDS')
+
+    options {
+        timeout(time: 5, unit: 'MINUTES')
         disableConcurrentBuilds()
     }
 
@@ -21,71 +22,69 @@ pipeline {
         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
-    // this is build section //
+
     stages {
+
         stage('Build') {
             steps {
-                script{
-                        sh """
-                        echo "Building"
-                        echo \$COURSE
-                        sleep 5
-                        env
+                sh """
+                echo "Building"
+                echo \$COURSE
+                sleep 5
+                env
 
-                        echo "Hello ${params.PERSON}"
-                        echo "Biography: ${params.BIOGRAPHY}"
-                        echo "Toggle: ${params.TOGGLE}"
-                        echo "Choice: ${params.CHOICE}"
-                        echo "Password: ${params.PASSWORD}"
-                        """
-                }
-               
+                echo "Hello ${params.PERSON}"
+                echo "Biography: ${params.BIOGRAPHY}"
+                echo "Toggle: ${params.TOGGLE}"
+                echo "Choice: ${params.CHOICE}"
+                """
             }
         }
+
         stage('Test') {
             steps {
-                 script{
-                        sh """ 
-                        echo "Testing"
-                        """
-                }
+                sh '''
+                echo "Testing"
+                '''
             }
         }
+
         stage('Deploy') {
-                 input {
+
+            input {
                 message "Should we continue?"
                 ok "Yes, we should."
-                submitter "alice,bob"
+                submitter "admin"
                 parameters {
                     string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
                 }
             }
 
             steps {
-                 script{
-                        sh """ 
-                        echo "Deploying"
-                        """
-                }
+                sh '''
+                echo "Deploying"
+                '''
             }
         }
     }
 
-     post { 
-        always { 
+    post {
+
+        always {
             echo 'I will always say Hello again!'
             cleanWs()
         }
-        success{
-                 echo 'its success!!!'   
+
+        success {
+            echo 'its success!!!'
         }
-        failure{
-                echo 'its failure !!!'
+
+        failure {
+            echo 'its failure !!!'
         }
-       aborted {
-                echo 'pipeline is aborted'
-            }
+
+        aborted {
+            echo 'pipeline is aborted'
+        }
     }
-
-
 }
