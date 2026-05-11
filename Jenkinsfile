@@ -20,13 +20,13 @@ pipeline {
         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
-    // this is build section
+    // this is build section //
     stages {
         stage('Build') {
             steps {
                 script{
                         sh """
-                        echo "Building-1"
+                        echo "Building"
                         echo \$COURSE
                         sleep 5
                         env
@@ -45,7 +45,7 @@ pipeline {
             steps {
                  script{
                         sh """ 
-                        echo "Testing-1"
+                        echo "Testing"
                         """
                 }
             }
@@ -54,7 +54,7 @@ pipeline {
             steps {
                  script{
                         sh """ 
-                        echo "Deploying-1"
+                        echo "Deploying"
                         """
                 }
             }
@@ -67,7 +67,7 @@ pipeline {
             cleanWs()
         }
         success{
-                 echo 'its success'   
+                 echo 'its success!!!'   
         }
         failure{
                 echo 'its failure'
