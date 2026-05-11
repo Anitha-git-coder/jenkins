@@ -7,6 +7,10 @@ pipeline {
     environment { 
         COURSE = 'Jenkins'
     }
+     options {
+        // Timeout counter starts AFTER agent is allocated
+        timeout(time: 10, unit: 'SECONDS')
+    }
     stages {
         stage('Build') {
             steps {
@@ -14,6 +18,7 @@ pipeline {
                         sh """ 
                         echo "Building-1"
                         echo $COURSE
+                        sleep 10
                         env
                         """
                 }
@@ -50,6 +55,9 @@ pipeline {
         }
         failure{
                 echo 'its failure'
+        }
+        aborted{
+            echo 'pipeline is abouted'
         }
     }
 
