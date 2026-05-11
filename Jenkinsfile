@@ -16,10 +16,10 @@ pipeline {
         stage('Build') {
             steps {
                 script{
-                        sh """ 
+                        sh """
                         echo "Building-1"
-                        echo $COURSE
-                        sleep 10
+                        echo \$COURSE
+                        sleep 5
                         env
                         """
                 }
@@ -57,9 +57,9 @@ pipeline {
         failure{
                 echo 'its failure'
         }
-        aborted{
-            echo 'pipeline is abouted'
-        }
+       aborted {
+                echo 'pipeline is aborted'
+            }
     }
 
 
