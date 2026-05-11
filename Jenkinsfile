@@ -70,7 +70,7 @@ pipeline {
                  echo 'its success!!!'   
         }
         failure{
-                echo 'its failure'
+                echo 'its failure !!!'
         }
        aborted {
                 echo 'pipeline is aborted'
