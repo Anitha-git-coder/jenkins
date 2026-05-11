@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script{
                         sh """ 
-                        echo "Building"
+                        echo "Building-1"
                         """
                 }
                
@@ -19,7 +19,7 @@ pipeline {
             steps {
                  script{
                         sh """ 
-                        echo "Testing"
+                        echo "Testing-1"
                         """
                 }
             }
@@ -28,7 +28,7 @@ pipeline {
             steps {
                  script{
                         sh """ 
-                        echo "Deploying"
+                        echo "Deploying-1"
                         """
                 }
             }
